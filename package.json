@@ -1,0 +1,40 @@
+{
+  "name": "app-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "api": "ts-node-dev --files src/api",
+    "db": "ts-node-dev --files src/database",
+    "products": "ts-node-dev --files src/products"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cookie-session": "^2.0.44",
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/morgan": "^1.9.3",
+    "@types/mssql": "^8.1.1",
+    "@types/node": "^18.7.14",
+    "ts-node-dev": "^2.0.0"
+  },
+  "dependencies": {
+    "@types/passport": "^1.0.10",
+    "@types/passport-google-oauth20": "^2.0.11",
+    "axios": "^0.27.2",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mssql": "^9.0.1",
+    "passport": "^0.5.3",
+    "passport-google-oauth20": "^2.0.0"
+  }
+}
