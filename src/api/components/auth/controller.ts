@@ -1,10 +1,11 @@
 import { Request, response, Response } from "express"
 import axios, { AxiosError } from 'axios'
 import * as responses from '../../../network/response'
+import config from "../../../config"
 
 export const register = async(req: Request, res: Response) => {
     try {
-        let { data } = await axios.post<string>("http://localhost:3002/api/user/create")
+        await axios.post<string>(`${config.api_db.URL}/user/create`)
         return responses.success(req, res, "User created")
     } catch (error) {
         if(error instanceof AxiosError) {
