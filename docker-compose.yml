@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  # back-api:
+  #   build: .
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     - database
+  #   command: sh -c "npm run build-api"
+  
+  
+  # back-products:
+  #   build: .
+  #   depends_on:
+  #     - back-api
+  #   ports:
+  #     - "3003:3003"
+  #   command: sh -c "npm run build-products"
+
+  back-db:
+    build: .
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_PUBLIC_URL=database
+    links:
+      - database
+    networks:
+      - backend
+    command: sh -c "npm run build-db"
+  
+  database:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+      - "14034:1433"
+    volumes:
+      - sql-data:/var/opt/mssql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=F9fz7p1%inn8L0CLZ@sq
+    networks:
+      - backend
+
+volumes:
+  sql-data:
+
+networks:
+  backend:
+    driver: bridge

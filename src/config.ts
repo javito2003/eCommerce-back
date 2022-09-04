@@ -24,6 +24,7 @@ export default {
     },
     sql: {
         port: process.env.PORT || 3000,
+        dbPort: process.env.DBPORT || 14034,
         nameDB: process.env.USER_DB,
         passDB: process.env.USER_PASS,
         serverName: process.env.SERVER_NAME || "",

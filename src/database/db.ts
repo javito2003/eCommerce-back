@@ -6,6 +6,7 @@ let configDB: sql.config = {
     password: config.sql.passDB,
     server: config.sql.serverName,
     database: config.sql.databaseName,
+    port: Number(config.sql.dbPort),
     options: {
         encrypt: true,
         trustServerCertificate: true,

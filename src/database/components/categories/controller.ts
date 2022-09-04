@@ -10,6 +10,8 @@ export const get = async(req: Request, res: Response) => {
         return responses.success(req, res, response.recordset, 200)
 
     } catch (error) {
+        console.log(error);
+        
         return responses.error(req, res, "Error to get categories")
     }
 }
