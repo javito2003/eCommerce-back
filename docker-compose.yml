@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  database:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=339P&VnK^BiuYqTIsOGJd
+      - MYSQL_PASSWORD=339P&VnK^BiuYqTIsOGJd
+      - MYSQL_DATABASE=ecommerce
+      - MYSQL_ROOT_HOST=%
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  back-api:
+    build: .
+    networks:
+      - services
+    ports:
+      - "3001:3001"
+    depends_on:
+      - database
+    links:
+      - back-db
+    command: sh -c "npm run build-api"
+  
+  
+  back-products:
+    build: .
+    depends_on:
+      - back-api
+    ports:
+      - "3003:3003"
+    networks:
+      - services
+    links:
+      - back-db
+    command: sh -c "npm run build-products"
+
+  back-db:
+    depends_on:
+      - database
+    build: .
+    networks:
+      - backend
+      - services
+    ports:
+      - "3002:3002"
+    links:
+      - database
+    command: sh -c "npm run build-db"
+    stdin_open: true
+    tty: true
+  
+  
+
+networks:
+  backend:
+  services:
+
+volumes:
+  mysql-data:

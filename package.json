@@ -6,7 +6,10 @@
   "scripts": {
     "api": "ts-node-dev --files src/api",
     "db": "ts-node-dev --files src/database",
-    "products": "ts-node-dev --files src/products"
+    "products": "ts-node-dev --files src/products",
+    "build-api": "node build/api",
+    "build-db": "node build/database",
+    "build-products": "node build/products"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +37,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mssql": "^9.0.1",
+    "mysql2": "^2.3.3",
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0"
   }
