@@ -5,9 +5,9 @@ import { getConnection } from "../../db";
 export const get = async(req: Request, res: Response) => {
     try {
         let pool = await getConnection()
-        let response = await pool.request().query("SELECT * FROM categories")
+        const [ rows ] = await pool.execute("SELECT * FROM categories")
 
-        return responses.success(req, res, response.recordset, 200)
+        return responses.success(req, res, rows, 200)
 
     } catch (error) {
         console.log(error);

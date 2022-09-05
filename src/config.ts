@@ -23,11 +23,10 @@ export default {
         URL: process.env.DB_URL || ""
     },
     sql: {
-        port: process.env.PORT || 3000,
-        dbPort: process.env.DBPORT || 14034,
-        nameDB: process.env.USER_DB,
-        passDB: process.env.USER_PASS,
-        serverName: process.env.SERVER_NAME || "",
-        databaseName: process.env.DATABASE_NAME
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER || "root",
+        password: process.env.DB_PASS || "",
+        database: process.env.DB_DATABASE || "",
+        port: process.env.DB_PORT_SQL || 33006
     }
 }

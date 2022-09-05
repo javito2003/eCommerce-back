@@ -2,20 +2,14 @@ import { Request, Response } from "express";
 import IProduct from "../../../models/IProduct";
 import * as responses from '../../../network/response'
 import { categoriesToSQL } from "../../../utils/parseArrayQuery";
-import { getConnection, sql } from "../../db";
+import { getConnection, mysql } from "../../db";
 
 
 export const create = async(req: Request, res: Response) => {
     try {
         let product:IProduct = req.body
         let pool = await getConnection()
-        await pool.request()
-                    .input("title", sql.VarChar, product.title)
-                    .input("description", sql.VarChar, product.description)
-                    .input("price", sql.Float, product.price)
-                    .input("userId", sql.Int, product.userId)
-                    .input("categoryId", sql.Int, product.categoryId)
-                    .query("INSERT INTO products(title, description, price, userId, categoryId) VALUES (@title, @description, @price, @userId, @categoryId)")
+        await pool.execute("INSERT INTO products(title, description, price, userId, categoryId) VALUES (?, ?, ?, ?, ?)", [ product.title, product.description, product.price, product.userId, product.categoryId ])
         return responses.success(req, res, "Producto creado", 201)
     } catch (error) {
         return responses.error(req, res, "Error to create product", 500)
@@ -30,36 +24,40 @@ export const get = async(req: Request, res: Response) => {
         }
         
         let pool = await getConnection()
-        let response:sql.IResult<any>
+        let response: mysql.RowDataPacket;
         switch(req.query.sort) {
             case 'none': 
                 if(categories) {
-                    response = await pool.request().query(`SELECT * FROM Products WHERE categoryId IN ${categories}`)
+                    response = await pool.execute(`SELECT * FROM products WHERE categoryId IN ${categories}`) as mysql.RowDataPacket
                 } else {
-                    response = await pool.request().query("SELECT * FROM Products")
+                    response = await pool.execute("SELECT * FROM products") as mysql.RowDataPacket
                 }
                 break
             case 'low_price':
                 if(categories) {
-                    response = await pool.request().query(`SELECT * FROM Products WHERE categoryId IN ${categories} ORDER BY price ASC`)
+                    response = await pool.execute(`SELECT * FROM products WHERE categoryId IN ${categories} ORDER BY price ASC`) as mysql.RowDataPacket
                 } else {
-                    response = await pool.request().query("SELECT * FROM Products ORDER BY price ASC")
+                    response = await pool.execute("SELECT * FROM products ORDER BY price ASC") as mysql.RowDataPacket
                 }
                 break
             case 'high_price':
                 if(categories) {
-                    response = await pool.request().query(`SELECT * FROM Products WHERE categoryId IN ${categories} ORDER BY price DESC`)
+                    response = await pool.execute(`SELECT * FROM products WHERE categoryId IN ${categories} ORDER BY price DESC`) as mysql.RowDataPacket
                 } else {
-                    response = await pool.request().query(`SELECT * FROM Products ORDER BY price DESC`)
+                    response = await pool.execute(`SELECT * FROM products ORDER BY price DESC`) as mysql.RowDataPacket
                 }
                 break
             default:
-                response = await pool.request().query("SELECT * FROM Products")
+                response = await pool.execute("SELECT * FROM products") as mysql.RowDataPacket
                 break
         }
-        return responses.success(req, res, response.recordset, 201)
+        console.log(response);
+        
+        return responses.success(req, res, response[0], 201)
 
     } catch (error) {
+        console.log(error);
+        
         return responses.error(req, res, "Error to get products", 500)
     }
 }

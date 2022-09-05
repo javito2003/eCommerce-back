@@ -20,15 +20,19 @@ passport.use(new GoogleStrategy({
     }
     try {
         let { data } = await axios.post<IResponse<IUserEntity>>(`${config.api_db.URL}/user/create`, toSend)
+        console.log(data);
+        
+        console.log(data);
         let user = data.body
         let toReturn = {
             user,
             token: auth.sign(user)
         }
+        
+        
         cb(null, toReturn)
 
     } catch (error) {
-        console.log(error);
         cb("Error to login", undefined)
     }
 }))

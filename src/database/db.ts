@@ -1,25 +1,19 @@
-import sql from 'mssql'
+import mysql from 'mysql2/promise'
 import config from '../config'
 
-let configDB: sql.config = {
-    user: config.sql.nameDB,
-    password: config.sql.passDB,
-    server: config.sql.serverName,
-    database: config.sql.databaseName,
-    port: Number(config.sql.dbPort),
-    options: {
-        encrypt: true,
-        trustServerCertificate: true,
-    }
+
+let configDB:mysql.ConnectionOptions = {
+    host: config.sql.host,
+    user: config.sql.user,
+    database: config.sql.database,
+    port: Number(config.sql.port),
+    password: config.sql.password
 }
 
-async function getConnection() {
-    const pool = await sql.connect(configDB)
-    return pool
 
+
+export const getConnection = async() => {
+    return await mysql.createConnection(configDB)
 }
 
-export {
-    getConnection,
-    sql
-}
+export {mysql}
