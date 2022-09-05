@@ -51,7 +51,6 @@ export const get = async(req: Request, res: Response) => {
                 response = await pool.execute("SELECT * FROM products") as mysql.RowDataPacket
                 break
         }
-        console.log(response);
         
         return responses.success(req, res, response[0], 201)
 
