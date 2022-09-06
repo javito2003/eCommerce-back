@@ -5,6 +5,9 @@ import ProductRouter from './components/product/network'
 
 const router = Router()
 
+router.use("/alive", (req, res) => {
+    return res.send("ok")
+})
 router.use("/api/user", UserRouter)
 router.use("/api/categories", CategoriesRouter)
 router.use("/api/products", ProductRouter)
