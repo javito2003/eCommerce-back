@@ -7,4 +7,6 @@ router.post("/create", Controller.create)
 
 router.get("/", Controller.get)
 
+router.get("/name", Controller.findByName)
+
 export default router

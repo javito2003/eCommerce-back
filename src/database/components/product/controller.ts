@@ -60,3 +60,44 @@ export const get = async(req: Request, res: Response) => {
         return responses.error(req, res, "Error to get products", 500)
     }
 }
+
+export const findByName = async(req: Request, res: Response) => {
+    try {
+        let name = req.query.name
+        let categories: string = ""
+        if(req.query.categories) {
+            categories = categoriesToSQL(req.query.categories as string[])
+        }
+        let pool = await getConnection()
+        let rows: mysql.RowDataPacket;
+        switch(req.query.sort) {
+            case 'low_price':
+                if(categories) {
+                    rows = await pool.execute(`SELECT * FROM products WHERE title LIKE '%${name}%' AND categoryId IN ${categories} ASC`) as mysql.RowDataPacket
+                } else {
+                    rows = await pool.execute(`SELECT * FROM products WHERE title LIKE '%${name}%' ASC`) as mysql.RowDataPacket
+                }
+                break;
+            case 'high_price':
+                if(categories) {
+                    rows = await pool.execute(`SELECT * FROM products WHERE title LIKE '%${name}%' AND categoryId IN ${categories} DESC`) as mysql.RowDataPacket
+                } else {
+                    rows = await pool.execute(`SELECT * FROM products WHERE title LIKE '%${name}%' DESC`) as mysql.RowDataPacket
+                }
+                break;
+            default:
+                if(categories) {
+                    rows = await pool.execute(`SELECT * FROM products WHERE title LIKE '%${name}%' AND categoryId IN ${categories}`) as mysql.RowDataPacket
+                } else {
+                    rows = await pool.execute(`SELECT * FROM products WHERE title LIKE '%${name}%'`) as mysql.RowDataPacket
+                }
+                break;
+        }
+        
+        return responses.success(req, res, rows[0], 201)
+
+    } catch (error) {
+        console.log(error);
+        return responses.error(req, res, "Error to get products", 500)
+    }
+}

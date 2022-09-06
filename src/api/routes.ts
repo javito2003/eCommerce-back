@@ -4,6 +4,9 @@ import CategoriesRouter from './components/categories/network'
 
 const router = Router()
 
+router.use("/alive", (req, res) => {
+    return res.send("ok")
+})
 router.use("/api/auth", AuthRouter)
 router.use("/api/categories", CategoriesRouter)
 
