@@ -1,10 +1,10 @@
-import { Request } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import { IUserEntity } from '../models/IUser'
 
-function sign(data: IUserEntity) {
-    return jwt.sign(data, config.jwt.secretKey)
+function sign(data: number) {
+    return jwt.sign(data.toString(), config.jwt.secretKey)
 }
 
 function verify(token: string) {
@@ -14,10 +14,11 @@ function verify(token: string) {
 const check = {
     Own: function(req: Request, owner: number) {
         const decoded = decodeHeader(req)
-        if(decoded) {
-            return true
-        }
         return false
+    },
+    logged: function(req:Request, res: Response, next: NextFunction) {
+        const decoded = decodeHeader(req)
+        next()
     }
 }
 

@@ -27,3 +27,23 @@ export const create = async (req: Request, res: Response) => {
         return responses.error(req, res, "Error to connect to database", 500)
     }
 }
+
+export const getUser = async(req: Request, res: Response) => {
+    try {
+        let id = req.query.userId
+        let userId = Number(id)
+
+        let pool = await getConnection()
+
+        let [ user ] = await pool.execute("select * from users where Id = ?", [userId]) as mysql.RowDataPacket[]
+
+        if(user[0]) {
+            return responses.success(req, res, user[0])
+        } else {
+            return responses.error(req, res, "User not found", 500)
+        }
+
+    } catch (error) {
+        return responses.error(req, res, "Error to get User", 500)
+    }
+}

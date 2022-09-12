@@ -2,6 +2,7 @@ import { Router } from "express";
 import UserRouter from './components/user/network'
 import CategoriesRouter from './components/categories/network'
 import ProductRouter from './components/product/network'
+import CartRouter from './components/cart/network'
 
 const router = Router()
 
@@ -11,6 +12,8 @@ router.use("/alive", (req, res) => {
 router.use("/api/user", UserRouter)
 router.use("/api/categories", CategoriesRouter)
 router.use("/api/products", ProductRouter)
+router.use("/api/cart", CartRouter)
+
 router.use("*", (req,res) => {
     return res.status(404).json("Route not found")
 })

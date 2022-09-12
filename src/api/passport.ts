@@ -19,17 +19,12 @@ passport.use(new GoogleStrategy({
         origin: profile.provider
     }
     try {
-        let { data } = await axios.post<IResponse<IUserEntity>>(`${config.api_db.URL}/user/create`, toSend)
-        console.log(data);
-        
-        console.log(data);
+        let { data } = await axios.post<IResponse<IUserEntity>>(`${config.api_db.URL}/user/create`, toSend)        
         let user = data.body
         let toReturn = {
-            user,
-            token: auth.sign(user)
+            userId: user.Id,
+            token: auth.sign(user.Id)
         }
-        
-        
         cb(null, toReturn)
 
     } catch (error) {
