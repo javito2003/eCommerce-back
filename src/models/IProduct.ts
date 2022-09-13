@@ -4,5 +4,6 @@ export default interface IProduct {
     description: string
     price: number
     userId: number
-    categoryId: number
+    categoryId: number,
+    imageUrl: string
 }

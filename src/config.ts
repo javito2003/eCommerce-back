@@ -8,7 +8,8 @@ export default {
         URL: process.env.FRONT_URL || "" 
     },
     products: {
-        PORT: process.env.PRODUCTS_PORT || 3003
+        PORT: process.env.PRODUCTS_PORT || 3003,
+        URL: process.env.PRODUCTS_URL || ""
     },
     passportGoogle: {
         clientID: process.env['GOOGLE_CLIENT_ID'] || "",

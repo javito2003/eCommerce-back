@@ -9,9 +9,12 @@ export const create = async(req: Request, res: Response) => {
     try {
         let product:IProduct = req.body
         let pool = await getConnection()
-        await pool.execute("INSERT INTO products(title, description, price, userId, categoryId) VALUES (?, ?, ?, ?, ?)", [ product.title, product.description, product.price, product.userId, product.categoryId ])
+        
+        await pool.execute("INSERT INTO products(title, description, price, userId, categoryId, imageUrl) VALUES (?, ?, ?, ?, ?, ?)", [ product.title, product.description, product.price, product.userId, product.categoryId, product.imageUrl ])
         return responses.success(req, res, "Producto creado", 201)
     } catch (error) {
+        console.log(error);
+        
         return responses.error(req, res, "Error to create product", 500)
     }
 }

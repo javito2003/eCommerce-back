@@ -23,6 +23,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/morgan": "^1.9.3",
     "@types/mssql": "^8.1.1",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.7.14",
     "ts-node-dev": "^2.0.0"
   },
@@ -37,6 +38,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mssql": "^9.0.1",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0"

@@ -12,6 +12,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/", routes)
 
+app.use("/images", express.static(__dirname + '/utils/images/products'))
+
 app.set('port', config.products.PORT)
 
 

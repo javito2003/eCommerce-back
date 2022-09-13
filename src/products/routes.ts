@@ -9,8 +9,9 @@ router.use("/alive", (req, res) => {
 })
 router.use("/api/products", ProductRouter)
 router.use("/api/cart", CartRouter)
-router.use("*", (req,res) => {
-    return res.status(404).json("Route not found")
-})
+
+// router.use("*", (req,res) => {
+//     return res.status(404).json("Route not found")
+// })
 
 export default router
